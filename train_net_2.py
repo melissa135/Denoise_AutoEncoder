@@ -68,7 +68,6 @@ if __name__ == '__main__':
 
     optimizer = optim.Adam([{'params':ae2.encoder2.parameters()},
 			    {'params':ae2.decoder2.parameters()}],lr=0.001)
-    #optimizer = optim.Adam(ae2.parameters(),lr=0.001)
     criterion = nn.MSELoss()
     
     for epoch in range(0, max_epochs):
