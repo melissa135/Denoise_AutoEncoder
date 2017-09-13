@@ -4,7 +4,7 @@ import collections
 import torch.nn as nn
 import torch.nn.init as init
 import torch.optim as optim
-from define_network import AutoEncoder_1
+from define_network import AutoEncoder_2,AutoEncoder_3
 from sample_set import Sample_set
 from torch.autograd import Variable
 
@@ -40,11 +40,39 @@ if __name__ == '__main__':
     print 'Training AutoEncoder.'
         
     max_epochs = 100
-    
-    ae = AutoEncoder_1()
-    print ae
 
-    optimizer = optim.Adam(ae.parameters(),lr=0.001)
+    ae3 = AutoEncoder_3()
+    print ae3
+    
+    # load the pretrain net
+    ae2 = AutoEncoder_2()
+    fname = path_ + '/autoencoder_layer2.pth'
+    ae2.load_state_dict(torch.load(fname))
+
+    new_dict = collections.OrderedDict()
+    for key in ae2.state_dict().keys():
+	new_dict[key] = ae2.state_dict()[key]
+	
+    new_dict['encoder3.weight'] = ae3.state_dict()['encoder3.weight']
+    new_dict['encoder3.bias'] = ae3.state_dict()['encoder3.bias']
+    new_dict['decoder3.weight'] = ae3.state_dict()['decoder3.weight']
+    new_dict['decoder3.bias'] = ae3.state_dict()['decoder3.bias']
+
+    ae3.load_state_dict(new_dict)
+   
+    # set the fixed parameters
+    for p in ae3.encoder1.parameters():
+	p.requires_grad = False
+    for p in ae3.decoder1.parameters():
+	p.requires_grad = False
+    for p in ae3.encoder2.parameters():
+	p.requires_grad = False
+    for p in ae3.decoder2.parameters():
+	p.requires_grad = False
+
+    optimizer = optim.Adam([{'params':ae3.encoder3.parameters()},
+			    {'params':ae3.decoder3.parameters()}],lr=0.001)
+
     criterion = nn.MSELoss()
     
     for epoch in range(0, max_epochs):
@@ -55,9 +83,9 @@ if __name__ == '__main__':
             input,target = data
             input,target = Variable(input),Variable(target)
 
-            ae.zero_grad()
+            ae3.zero_grad()
 
-            output = ae(input.float())
+            output = ae3(input.float())
             loss = criterion(output, target.float())
       
             loss.backward()
@@ -66,11 +94,11 @@ if __name__ == '__main__':
             loss = loss.data[0]
             current_loss += loss
 	
-	t_loss = test_loss(ae,testloader)
+	t_loss = test_loss(ae3,testloader)
         print ( '[ %d ] loss : %.4f %.4f' % \
 	      ( epoch+1, batchsize*current_loss/trainset.__len__(), batchsize*t_loss/testset.__len__()) )
 
         current_loss = 0
 
-    torch.save(ae.state_dict(),path_+'/autoencoder_layer1.pth')
+    torch.save(ae3.state_dict(),path_+'/autoencoder_layer3.pth')
 
