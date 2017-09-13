@@ -4,9 +4,9 @@ import torch.nn.functional as F
 from torch.autograd import Variable
 
 
-class AutoEncoder(nn.Module):
+class AutoEncoder_1(nn.Module):
     def __init__(self, input_size=48, layer1_size=20):
-        super(AutoEncoder, self).__init__()
+        super(AutoEncoder_1, self).__init__()
 
 	self.input_size = input_size       
 	self.layer1_size = layer1_size
