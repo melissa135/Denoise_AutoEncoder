@@ -5,7 +5,7 @@ from torch.autograd import Variable
 
 
 class AutoEncoder(nn.Module):
-    def __init__(self, input_size=40, layer1_size=20):
+    def __init__(self, input_size=48, layer1_size=20):
         super(AutoEncoder, self).__init__()
 
 	self.input_size = input_size       
@@ -21,7 +21,7 @@ class AutoEncoder(nn.Module):
 
 
 class AutoEncoder_2(nn.Module):
-    def __init__(self, input_size=40, layer1_size=20, layer2_size=10):
+    def __init__(self, input_size=48, layer1_size=20, layer2_size=10):
         super(AutoEncoder_2, self).__init__()
 
 	self.input_size = input_size       
@@ -42,7 +42,7 @@ class AutoEncoder_2(nn.Module):
 
 
 class AutoEncoder_3(nn.Module):
-    def __init__(self, input_size=40, layer1_size=20, layer2_size=10, layer3_size=5):
+    def __init__(self, input_size=48, layer1_size=20, layer2_size=10, layer3_size=5):
         super(AutoEncoder_3, self).__init__()
 
 	self.input_size = input_size       
@@ -68,7 +68,7 @@ class AutoEncoder_3(nn.Module):
 
 
 class Express_encode(nn.Module):
-    def __init__(self, input_size=40, layer1_size=20, layer2_size=10, layer3_size=5):
+    def __init__(self, input_size=48, layer1_size=20, layer2_size=10, layer3_size=5):
         super(ExpressCode, self).__init__()
 
 	self.input_size = input_size       
