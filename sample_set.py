@@ -1,4 +1,5 @@
 import os
+import random
 import torch
 import torch.utils.data as data
 from pandas.io.parsers import read_csv
@@ -24,8 +25,6 @@ def read_files(folder):
 		else :
 		    temp.append(df['price_change'][i])
 
-	    #daily_data.append(temp[:])	
-
     return daily_data
 
 
@@ -39,27 +38,17 @@ class Sample_set(data.Dataset):
 
     def __getitem__(self, index):
 
-	item = torch.Tensor(self.data[index][:])
+	rand_prob = 0.5
+        rand_range = 0.1
+        
+        item_with_noise = self.data[index][:]
+        for i in range(0,len(item_with_noise)):
+            if random.uniform(0,1) < rand_prob :
+                item_with_noise[i] += random.uniform(-rand_range,rand_range)
+
+	item = torch.Tensor(item_with_noise)
         target = torch.Tensor(self.data[index][:])
 	return item,target
 
     def __len__(self):
         return len(self.data)
-
-
-class Sample_set_2(data.Dataset):
-
-    def __init__(self, folder):
-
-	data = read_files(folder)
-	print 'This set contains %d items.' % len(data)
-	self.data = data
-
-    def __getitem__(self, index):
-
-	item = torch.Tensor(self.data[index][:])
-        target = torch.Tensor([ self.data[index+1][-1] ])
-	return item,target
-
-    def __len__(self):
-        return len(self.data)-1
