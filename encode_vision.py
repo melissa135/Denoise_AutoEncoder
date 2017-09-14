@@ -1,4 +1,4 @@
-import os.path
+import os
 import torch
 import collections
 import numpy as np
@@ -10,6 +10,9 @@ from sample_set import Sample_set
 if __name__ == '__main__':
 
     path_ = os.path.abspath('.')
+
+    if not os.path.exists(path_+'/vision') :
+        os.mkdir(path_+'/vision')
 
     n = 100
 
