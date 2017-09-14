@@ -67,9 +67,9 @@ class AutoEncoder_3(nn.Module):
         return x
 
 
-class Express_encode(nn.Module):
+class Compression_encode(nn.Module):
     def __init__(self, input_size=48, layer1_size=20, layer2_size=10, layer3_size=5):
-        super(ExpressCode, self).__init__()
+        super(Compression_encode, self).__init__()
 
 	self.input_size = input_size       
 	self.layer1_size = layer1_size
