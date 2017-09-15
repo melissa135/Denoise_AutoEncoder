@@ -45,7 +45,7 @@ Each layers of above network is simple full connection.
 2. Run `train_net_2.py`, which copies the parameters of encoder1/decoder1 from `AutoEncoder_1` as the fixed parameters for `AutoEncoder2` and only train the encoder2/decoder2.
 3. Run `train_net_3.py`, which copies the parameters of encoder1/decoder1 and encoder2/decoder2 from `AutoEncoder_2` as the fixed parameters for `AutoEncoder3` and only train the encoder3/decoder3.
 4. Run `make_encoder.py` , truncate the `AutoEncoder_3` and retain the front part of it as an compression encoder which converts a 48-dimensional vector into a 5-dimension vector.
-5. Run `encode_vision.py` to show the compressed trend chart of stocks.
+5. Run `encode_vision.py` to show the trend chart of stocks recovered from compressed encoding.
       
 
 ## Result
