@@ -7,7 +7,7 @@ from torch.autograd import Variable
 from define_network import Compression_encoder,AutoEncoder_3
 from sample_set import Sample_set
 
-if __name__ == '__main__':
+if __name__ == '__main__': # trunc the autoencoder and reserve the first half part
 
     path_ = os.path.abspath('.')
 
